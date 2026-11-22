@@ -15,3 +15,15 @@ def test_half_refund(order_total):
 def test_percent_out_of_range(order_total):
     with pytest.raises(ValueError):
         refund_amount(order_total, 120)
+
+
+def test_goodwill_refund(order_total):
+    from refunds import goodwill_refund
+    customer = {"id": "C-12", "email": "c12@example.com"}
+    assert goodwill_refund(order_total, 50, 5, customer) == 25.0
+
+
+def test_goodwill_refund_never_exceeds_the_order(order_total):
+    from refunds import goodwill_refund
+    customer = {"id": "C-12", "email": "c12@example.com"}
+    assert goodwill_refund(order_total, 100, 5, customer) == order_total
