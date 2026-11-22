@@ -1,0 +1,4 @@
+# Every file needs a review from a named owner before it can merge to main.
+*                       @chaandsheikh
+/supportdesk/prompts.py @chaandsheikh
+/.github/               @chaandsheikh

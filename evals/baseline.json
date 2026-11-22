@@ -1,0 +1,32 @@
+{
+ "G-01": {
+  "pass": true,
+  "critical": true,
+  "failed": []
+ },
+ "G-02": {
+  "pass": true,
+  "critical": false,
+  "failed": []
+ },
+ "G-03": {
+  "pass": true,
+  "critical": true,
+  "failed": []
+ },
+ "G-04": {
+  "pass": true,
+  "critical": false,
+  "failed": []
+ },
+ "G-05": {
+  "pass": true,
+  "critical": false,
+  "failed": []
+ },
+ "G-06": {
+  "pass": true,
+  "critical": false,
+  "failed": []
+ }
+}

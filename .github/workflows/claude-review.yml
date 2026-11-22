@@ -1,0 +1,34 @@
+name: claude-review
+on:
+  pull_request:
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  claude-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install -g @anthropic-ai/claude-code@2.1.330
+      - name: Review the diff with claude -p
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          git diff origin/${{ github.base_ref }}...HEAD > pr.diff
+          claude -p "$(cat .github/review_prompt.md)" \
+            --output-format json \
+            --json-schema "$(cat .github/review_schema.json)" \
+            --allowedTools "Read,Grep,Glob" \
+            --model sonnet --max-budget-usd 0.50 > review.json
+      - name: Post the findings as inline comments
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REVIEW_MODE: ${{ vars.REVIEW_MODE }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python tools/post_comments.py review.json
