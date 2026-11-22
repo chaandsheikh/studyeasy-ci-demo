@@ -25,6 +25,8 @@ jobs:
             --json-schema "$(cat .github/review_schema.json)" \
             --allowedTools "Read,Grep,Glob" \
             --model sonnet --max-budget-usd 0.50 > review.json
+      - name: Show the JSON findings
+        run: jq '.structured_output' review.json
       - name: Post the findings as inline comments
         env:
           GH_TOKEN: ${{ github.token }}
