@@ -16,3 +16,14 @@ def goodwill_refund(order_total, percent, bonus, customer):
     amount = min(refund_amount(order_total, percent) + bonus, order_total)
     log.info("goodwill refund %s to %s", amount, customer["id"])
     return amount
+
+
+REASONS = {"late": "Order arrived late", "damaged": "Item arrived damaged",
+           "wrong_item": "Wrong item sent"}
+
+
+def refund_reason(code):
+    """the text shown to the customer for a refund reason code"""
+    if code not in REASONS:
+        raise ValueError(f"unknown refund reason: {code}")
+    return REASONS[code]
