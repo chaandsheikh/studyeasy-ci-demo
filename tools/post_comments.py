@@ -23,7 +23,9 @@ for f in findings:
         continue
     subprocess.run(["gh", "api", api, "-f", f"body={body}", "-f", f"path={f['file']}",
                     "-F", f"line={f['line']}", "-f", "side=RIGHT",
-                    "-f", f"commit_id={os.environ['HEAD_SHA']}"], check=True)
+                    "-f", f"commit_id={os.environ['HEAD_SHA']}"],
+                   check=True, capture_output=True)
+    print("  posted as an inline comment")
 
 high = [f for f in findings if f["severity"] == "high"]
 print(f"{len(findings)} findings, {len(high)} high, mode {mode}")
