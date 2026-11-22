@@ -14,5 +14,5 @@ def refund_amount(order_total, percent):
 def goodwill_refund(order_total, percent, bonus, customer):
     """a partial refund plus a goodwill bonus for a late order"""
     amount = refund_amount(order_total, percent) + bonus
-    log.info("goodwill refund %s to %s", amount, customer["email"])
+    log.info("goodwill refund %s to %s", amount, customer["id"])
     return amount
