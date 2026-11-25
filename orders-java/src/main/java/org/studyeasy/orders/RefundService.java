@@ -17,4 +17,11 @@ public class RefundService {
         return orderTotal.multiply(BigDecimal.valueOf(percent))
                 .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
     }
+
+    /** A partial refund plus a goodwill bonus for a late order. */
+    public BigDecimal goodwillRefund(BigDecimal orderTotal, int percent, BigDecimal bonus, Customer customer) {
+        BigDecimal amount = refundAmount(orderTotal, percent).add(bonus);
+        LOG.info("goodwill refund " + amount + " to " + customer.email());
+        return amount;
+    }
 }

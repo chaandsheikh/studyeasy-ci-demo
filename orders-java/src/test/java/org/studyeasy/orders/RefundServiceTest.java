@@ -26,4 +26,11 @@ class RefundServiceTest {
         assertThrows(IllegalArgumentException.class, () -> refunds.refundAmount(orderTotal, 101));
         assertThrows(IllegalArgumentException.class, () -> refunds.refundAmount(orderTotal, -1));
     }
+
+    @Test
+    void goodwillBonusIsAddedToThePercentRefund() {
+        Customer customer = new Customer("C-31", "ana@example.com");
+        assertEquals(new BigDecimal("25.00"),
+                refunds.goodwillRefund(orderTotal, 50, new BigDecimal("5.00"), customer));
+    }
 }
