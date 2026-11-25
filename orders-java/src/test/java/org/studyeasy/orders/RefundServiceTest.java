@@ -33,4 +33,11 @@ class RefundServiceTest {
         assertEquals(new BigDecimal("25.00"),
                 refunds.goodwillRefund(orderTotal, 50, new BigDecimal("5.00"), customer));
     }
+
+    @Test
+    void goodwillRefundNeverExceedsTheOrderTotal() {
+        Customer customer = new Customer("C-31", "ana@example.com");
+        assertEquals(orderTotal,
+                refunds.goodwillRefund(orderTotal, 90, new BigDecimal("20.00"), customer));
+    }
 }

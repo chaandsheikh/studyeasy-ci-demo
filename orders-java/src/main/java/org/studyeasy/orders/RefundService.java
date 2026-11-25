@@ -20,8 +20,8 @@ public class RefundService {
 
     /** A partial refund plus a goodwill bonus for a late order. */
     public BigDecimal goodwillRefund(BigDecimal orderTotal, int percent, BigDecimal bonus, Customer customer) {
-        BigDecimal amount = refundAmount(orderTotal, percent).add(bonus);
-        LOG.info("goodwill refund " + amount + " to " + customer.email());
+        BigDecimal amount = refundAmount(orderTotal, percent).add(bonus).min(orderTotal);
+        LOG.info("goodwill refund " + amount + " to " + customer.id());
         return amount;
     }
 }
