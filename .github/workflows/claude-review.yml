@@ -24,7 +24,7 @@ jobs:
             --output-format json \
             --json-schema "$(cat .github/review_schema.json)" \
             --allowedTools "Read,Grep,Glob" \
-            --model sonnet --max-budget-usd 0.50 > review.json
+            --model sonnet --max-budget-usd 0.50 > review.json || { cat review.json; exit 1; }
       - name: Show the JSON findings
         run: jq '.structured_output' review.json
       - name: Post the findings as inline comments
